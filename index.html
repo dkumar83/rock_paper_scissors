@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Rock, Paper, Scissors</title>
+</head>
+
+<body>
+<script>
+console.log("Hello World!");
+
+function getComputerChoice() {
+    // let randomNum = Math.random();
+    // return randomNum < 0.33 ? "rock" : randomNum > 0.66 ? "scissors" : "paper";
+    let randomNum = Math.floor(3 * Math.random());
+
+    return randomNum === 0 ? "rock" : randomNum === 1 ? "paper" : "scissors";
+}
+
+function getHumanChoice() {
+    let choice = prompt("Rock, Paper, Scissors");
+    if (choice) {
+        choice = choice.toLowerCase();
+    } else {
+        // set choice to undefined if cancel prompt button is selected
+        choice = undefined;
+    }
+
+    return choice;
+}
+
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+
+    function playRound() {
+        let humanChoice = getHumanChoice();
+        let computerChoice = getComputerChoice();
+        if (humanChoice === computerChoice) {
+            // Draw
+            return "Draw";
+        } else if (humanChoice === "rock" && computerChoice === "scissors") {
+            humanScore++;
+            return "You WIN. Rock beats scissors";
+        } else if (computerChoice === "rock" && humanChoice === "scissors") {
+            computerScore++;
+            return "You LOSE. Rock beats scissors";
+        } else if (humanChoice === "paper" && computerChoice === "rock") {
+            humanScore++;
+            return "You WIN. Paper beats rock";
+        } else if (computerChoice === "paper" && humanChoice === "rock") {
+            computerScore++;
+            return "You LOSE. Paper beats rock";
+        } else if (humanChoice === "paper" && computerChoice === "scissors") {
+            computerScore++;
+            return "You LOSE. Scissors beats paper";
+        } else if (computerChoice === "paper" && humanChoice === "scissors") {
+            humanScore++;
+            return "You WIN. Scissors beats paper";
+        } else {
+            // account for human choices not equal to rock, paper or scissors
+            computerScore++;
+            return "You must enter 'rock', 'paper' or 'scissors'. FAILURE TO COMPLY WITH MEAN YOU AUTOMATICALLY LOSE THE ROUND";
+        }
+    }
+
+    // Create a for loop to play 5 rounds
+    for (let i = 0; i < 5; i++) {
+        console.log(playRound());
+    }
+
+    // Display final score and overall winner
+    if (computerScore > humanScore) {
+        console.log(`Game Over -> You LOSE: Computer Score: ${computerScore}, Your Score: ${humanScore}`);
+    } else if (computerScore < humanScore) {
+        console.log(`Game Over -> You WIN: Computer Score: ${computerScore}, Your Score: ${humanScore}`);
+    } else {
+        console.log("Game Over -> Draw");
+    }
+}
+
+playGame();
+
+
+</script>
+</body>
+</html>
