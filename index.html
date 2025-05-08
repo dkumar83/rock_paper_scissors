@@ -44,22 +44,28 @@ let roundsPlayed = 0;
 let humanScore = 0;
 let computerScore = 0;
 
+let scoreOfFive = true;
+
+if (humanScore === 5 || computerScore === 5) {
+    scoreOfFive = false;
+}
+
 rock.addEventListener("click", () => {
-    if (roundsPlayed < 5) {
+    if (scoreOfFive) {
         playRound("rock", roundsPlayed);
     }
 });
 
 
 paper.addEventListener("click", () => {
-    if (roundsPlayed < 5) {
+    if (scoreOfFive) {
         playRound("paper", roundsPlayed);
     }
 });
 
 
 scissors.addEventListener("click", () => {
-    if (roundsPlayed < 5) {
+    if (scoreOfFive) {
         playRound("scissors", roundsPlayed);
     }
 });
@@ -74,6 +80,8 @@ newGame.addEventListener("click", () => {
     computerScore = 0;
     console.clear();
     document.body.style = "background: white; color: black;";
+    scoreOfFive = true;
+
 });
 
 
@@ -131,8 +139,12 @@ function playRound(humanChoice, i) {
         console.log("Round: "+roundsPlayed, "CPU: "+computerScore, "Player: "+humanScore);
         roundNumber.innerText += `You: ${humanScore} \t Computer: ${computerScore}`; 
 
+        if (humanScore === 5 || computerScore === 5) {
+           scoreOfFive = false;
+        }
 
-        if (roundsPlayed === 5) {
+
+        if (!scoreOfFive) {
             // Display final score and overall winner
             if (computerScore > humanScore) {
                 console.log(`Game Over: You LOSE. Computer Score: ${computerScore}, Your Score: ${humanScore}`);
@@ -149,6 +161,7 @@ function playRound(humanChoice, i) {
                 //document.body.style = "color: black; background: #f8ed5c;";
 
             }
+            
         }
 
     }
