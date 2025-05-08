@@ -10,6 +10,23 @@
         padding: 1em;
     }
 
+    .container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 2em;
+    }
+
+    .container div {
+        display: flex;
+    }
+    #round {
+        display: flex;
+        flex-direction: column;
+    }
+
 </style>
 </head>
 
@@ -17,11 +34,13 @@
 <div class="container">
     <h1>Rock, Paper, Scissors</h1>
     <p>Select your choice</p>
-    <button id="rock">Rock</button>
-    <button id="paper">Paper</button>
-    <button id="scissors">Scissors</button>
+    <div>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
     <h2></h2>
-    <h3 id="round">Round scores will be shown here</h3>
+    <div id="round"><span><strong>Round scores will be shown here</strong></span></div>
     <h1 id="result"></h1>
     <button id="new">Start new game</button>
 </div>
@@ -74,7 +93,7 @@ scissors.addEventListener("click", () => {
 newGame.addEventListener("click", () => {
     roundsPlayed = 0;
     roundTitle.innerText = "";
-    roundNumber.innerText = "Round scores will be shown here";
+    roundNumber.innerHTML = "<span><strong>Round scores will be shown here</strong></span>";
     resultTitle.innerText = "";
     humanScore = 0;
     computerScore = 0;
@@ -98,15 +117,9 @@ function getComputerChoice() {
 
 function playRound(humanChoice, i) {
     let newline;
-    if (roundsPlayed === 0) {
-        roundNumber.innerText = "";
-        newline = "";
-    } else {
-        newline = "\n\n";
-    }
     roundsPlayed++;
-    roundNumber.innerText += newline + "Round " + roundsPlayed + " results";
-    roundNumber.innerText += "\n" 
+    const roundSpan = document.createElement("span");
+    roundSpan.innerText += "Round " + roundsPlayed + " results. ";
 
         let computerChoice = getComputerChoice();
         console.log("Your choice: " + humanChoice, "Computer choice: " + computerChoice);
@@ -137,7 +150,10 @@ function playRound(humanChoice, i) {
             roundTitle.innerText =  "You must enter 'rock', 'paper' or 'scissors'. FAILURE TO COMPLY WITH MEAN YOU AUTOMATICALLY LOSE THE ROUND";
         }
         console.log("Round: "+roundsPlayed, "CPU: "+computerScore, "Player: "+humanScore);
-        roundNumber.innerText += `You: ${humanScore} \t Computer: ${computerScore}`; 
+        roundSpan.innerText += `You: ${humanScore} \t Computer: ${computerScore}`; 
+
+        roundNumber.appendChild(roundSpan);
+        //document.querySelector(".container").insertAdjacentElement('afterend', roundSpan)
 
         if (humanScore === 5 || computerScore === 5) {
            scoreOfFive = false;
